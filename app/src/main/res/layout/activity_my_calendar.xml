@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.myCalendarActivity">
+
+    <CalendarView
+        android:id="@+id/myCalendar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/et_reminder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/myCalendar"
+        android:layout_marginHorizontal="5dp"
+        android:background="#96C1F0"
+        android:hint="Enter event or reminder"
+        android:padding="15dp"
+        android:textAlignment="center" />
+
+    <Button
+        android:id="@+id/reminderBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/et_reminder"
+        android:layout_marginHorizontal="5dp"
+        android:background="@color/design_default_color_primary_dark"
+        android:layout_marginTop="15dp"
+        android:onClick="setReminder"
+        android:text="Save"
+        android:textColor="@color/white" />
+
+</RelativeLayout>

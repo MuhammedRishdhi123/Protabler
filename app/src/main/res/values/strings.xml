@@ -1,0 +1,79 @@
+<resources>
+    <string name="app_name">Protabler</string>
+    <string name="first_name">First name</string>
+    <string name="last_name">Last name</string>
+    <string name="email">Email</string>
+    <string name="already_have_account">Already have account?</string>
+    <string name="curriculum">Curriculum</string>
+    <string name="password">Password</string>
+    <string name="register">Register</string>
+    <string name="phone">Phone</string>
+    <string name="batch_code">Batch code</string>
+    <string name="close">Close</string>
+    <string name="open">Open</string>
+
+    <string name="dont_have_an_account">Dont have an account ?</string>
+
+    <string name="forgot_passwword">Forgot passwword</string>
+    <string name="login">Login</string>
+
+    <string-array name="Main">
+        <item>Timetable</item>
+        <item>Modules</item>
+        <item>Faculty</item>
+        <item>Resources</item>
+        <item>Settings</item>
+    </string-array>
+
+    <string-array name="adminPanelItems">
+        <item>Manage timetable</item>
+        <item>Manage modules</item>
+        <item>Manage faculty</item>
+        <item>Manage students</item>
+        <item>Settings</item>
+    </string-array>
+
+    <string-array name="Description">
+        <item>The weekly timetable for the semester</item>
+        <item>Module details and the recommended resources</item>
+        <item>Contact details of your faculty members</item>
+        <item>Extra features and add-ons</item>
+        <item>Update app settings and profile details</item>
+    </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+
+    <string-array name="resources">
+        <item>My Calender</item>
+    </string-array>
+
+    <string-array name="days">
+        <item>Monday</item>
+        <item>Tuesday</item>
+        <item>Wednesday</item>
+        <item>Thursday</item>
+        <item>Friday</item>
+        <item>Saturday</item>
+    </string-array>
+
+
+</resources>

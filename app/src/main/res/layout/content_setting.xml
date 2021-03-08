@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/ToolBarMain"
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/actionBarSize"
+            android:background="@color/colorPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:titleTextColor="@color/textColor1"></androidx.appcompat.widget.Toolbar>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <ImageView
+        android:id="@+id/setting_image"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginTop="15dp"
+        app:srcCompat="@drawable/settings" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Account Settings"
+        android:layout_marginHorizontal="5dp"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_marginTop="15dp"/>
+
+    <EditText
+        android:id="@+id/user_name_setting"
+        android:layout_width="match_parent"
+        android:layout_marginHorizontal="15dp"
+        android:layout_height="50dp"
+        android:text="Username"
+        android:inputType="text"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/rounded_border_edittext"
+        android:textAlignment="center"/>
+
+    <EditText
+        android:id="@+id/user_email_setting"
+        android:layout_width="match_parent"
+        android:layout_marginHorizontal="15dp"
+        android:layout_height="50dp"
+        android:text="Email"
+        android:inputType="textEmailAddress"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/rounded_border_edittext"
+        android:textAlignment="center"/>
+
+    <EditText
+        android:id="@+id/user_curriculum_setting"
+        android:layout_width="match_parent"
+        android:layout_marginHorizontal="15dp"
+        android:layout_height="50dp"
+        android:text="Curriculum"
+        android:inputType="text"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/rounded_border_edittext"
+        android:textAlignment="center"/>
+
+    <EditText
+        android:id="@+id/user_phone_setting"
+        android:layout_width="match_parent"
+        android:layout_marginHorizontal="15dp"
+        android:layout_height="50dp"
+        android:text="Phone"
+        android:inputType="phone"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/rounded_border_edittext"
+        android:textAlignment="center"/>
+
+    <EditText
+        android:id="@+id/user_password_setting"
+        android:layout_width="match_parent"
+        android:layout_marginHorizontal="15dp"
+        android:layout_height="50dp"
+        android:hint="Change password"
+        android:inputType="textPassword"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/rounded_border_edittext"
+        android:textAlignment="center"/>
+
+    <Button
+        android:id="@+id/user_account_update"
+        android:layout_width="match_parent"
+        android:layout_marginHorizontal="15dp"
+        android:layout_height="50dp"
+        android:text="Update"
+        android:onClick="update"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/white"
+        android:background="@drawable/round_button"
+        android:textAlignment="center"/>
+
+
+
+
+</LinearLayout>
