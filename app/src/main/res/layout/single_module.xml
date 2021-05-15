@@ -1,0 +1,49 @@
+<androidx.cardview.widget.CardView
+    android:layout_height="100dp"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#C5E6FF"
+    android:elevation="4dp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+        <com.example.protabler.Utils.LetterImageView
+            android:id="@+id/moduleImg"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginStart="5dp">
+
+
+        </com.example.protabler.Utils.LetterImageView>
+
+        <TextView
+            android:id="@+id/moduleTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/moduleImg"
+            android:text="Title"
+            android:textSize="16dp"
+            android:layout_marginLeft="10dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/moduleCredit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/moduleImg"
+            android:text="Credit"
+            android:layout_below="@+id/moduleTitle"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:textStyle="bold" />
+
+
+
+    </RelativeLayout>
+
+
+</androidx.cardview.widget.CardView>

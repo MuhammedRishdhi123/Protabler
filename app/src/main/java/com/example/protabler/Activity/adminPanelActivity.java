@@ -29,7 +29,7 @@ public class adminPanelActivity extends AppCompatActivity implements NavigationV
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle mtoggle;
-    SharedPreferences session;
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,10 +45,16 @@ public class adminPanelActivity extends AppCompatActivity implements NavigationV
         drawerLayout=(DrawerLayout)findViewById(R.id.drawer_layout);
         NavigationView navigationView=(NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        navigationView.getMenu().findItem(R.id.manage_course_menu_item).setVisible(true);
+        navigationView.getMenu().findItem(R.id.manage_lecturer_menu_item).setVisible(true);
+        navigationView.getMenu().findItem(R.id.manage_module_menu_item).setVisible(true);
+        navigationView.getMenu().findItem(R.id.manage_student_menu_item).setVisible(true);
+        navigationView.getMenu().findItem(R.id.manage_timetable_menu_item).setVisible(true);
+        navigationView.getMenu().findItem(R.id.profile_menu_item).setVisible(true);
         View headerView=navigationView.getHeaderView(0);
         TextView username=headerView.findViewById(R.id.user_profile_name);
-        session= getSharedPreferences("session",MODE_PRIVATE);
-        username.setText(session.getString("user_name","Username"));
+        sharedPreferences = getSharedPreferences("session",MODE_PRIVATE);
+        username.setText(sharedPreferences.getString("name","Username"));
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Admin Panel");
@@ -79,7 +85,7 @@ public class adminPanelActivity extends AppCompatActivity implements NavigationV
                         break;
                     }
                     case 2: {
-                        Intent intent=new Intent(adminPanelActivity.this,manageFacultyActivity.class);
+                        Intent intent=new Intent(adminPanelActivity.this,manageLecturerActivity.class);
                         startActivity(intent);
                         break;
                     }
@@ -121,8 +127,8 @@ public class adminPanelActivity extends AppCompatActivity implements NavigationV
                 startActivity(intent);
                 break;
             }
-            case R.id.manage_faculty_menu_item:{
-                Intent intent=new Intent(adminPanelActivity.this,manageFacultyActivity.class);
+            case R.id.manage_lecturer_menu_item:{
+                Intent intent=new Intent(adminPanelActivity.this,manageLecturerActivity.class);
                 startActivity(intent);
                 break;
             }
@@ -138,7 +144,7 @@ public class adminPanelActivity extends AppCompatActivity implements NavigationV
 
             }
             case R.id.logout_menu_item:{
-                SharedPreferences.Editor editor=session.edit();
+                SharedPreferences.Editor editor= sharedPreferences.edit();
                 editor.clear();
                 editor.commit();
                 Intent intent=new Intent(adminPanelActivity.this,MainActivity.class);
@@ -157,6 +163,11 @@ public class adminPanelActivity extends AppCompatActivity implements NavigationV
     protected void onRestart() {
         super.onRestart();
         setupView();
+    }
+
+    @Override
+    public void onBackPressed() {
+        finishAffinity();
     }
 
     @Override
@@ -210,8 +221,8 @@ public class adminPanelActivity extends AppCompatActivity implements NavigationV
                 imageView.setImageResource(R.drawable.admin_timetable);
             }else if(titleList[position].equalsIgnoreCase("Manage modules")){
                 imageView.setImageResource(R.drawable.admin_modules);
-            }else if(titleList[position].equalsIgnoreCase("Manage faculty")){
-                imageView.setImageResource(R.drawable.admin_faculty);
+            }else if(titleList[position].equalsIgnoreCase("Manage lecturers")){
+                imageView.setImageResource(R.drawable.ic_people_black_24dp);
             }else if(titleList[position].equalsIgnoreCase("Manage students")){
                 imageView.setImageResource(R.drawable.admin_students);
             }else{

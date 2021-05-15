@@ -33,15 +33,5 @@
             android:dividerHeight="10dp"
             android:divider="@null"></ListView>
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_module"
-            android:layout_width="wrap_content"
-            android:backgroundTint="@color/colorPrimary"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_marginRight="25dp"
-            android:layout_marginBottom="25dp"
-            android:src="@drawable/ic_add_white_12dp"
-            />
     </FrameLayout>
 </LinearLayout>

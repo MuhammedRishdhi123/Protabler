@@ -15,24 +15,43 @@
             android:layout_margin="8dp"></com.example.protabler.Utils.LetterImageView>
 
         <TextView
-            android:id="@+id/dayInfoItem"
+            android:id="@+id/sessionModule"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignTop="@id/letterViewDayInfo"
             android:layout_marginLeft="7dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:layout_toRightOf="@id/letterViewDayInfo"
-            android:text="Modules"
+            android:text="sessions"
             android:textSize="24dp"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/dayInfoItem_time"
+            android:id="@+id/sessionLecturer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/dayInfoItem"
+            android:layout_below="@id/sessionModule"
+            android:layout_marginLeft="7dp"
+            android:layout_toRightOf="@id/letterViewDayInfo"
+            android:text="sessionLecturer"
+            />
+
+        <TextView
+            android:id="@+id/sessionClass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/sessionLecturer"
             android:layout_alignParentRight="true"
-            android:text="Time"
+            android:layout_marginRight="10dp"
+            android:text="Class" />
+
+        <TextView
+            android:id="@+id/sessionTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/sessionClass"
+            android:layout_alignParentRight="true"
+            android:text="sessionTime"
             android:layout_marginRight="10dp"
             />
 

@@ -5,36 +5,77 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.util.Linkify;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-import com.example.protabler.R;
-import com.example.protabler.Utils.DBAccess;
+import android.widget.Toast;
 
-import org.w3c.dom.Text;
+import com.example.protabler.API.API;
+import com.example.protabler.API.API_BASE_URL;
+import com.example.protabler.Dto.FacultyDTO;
+import com.example.protabler.JsonList.FacultyList;
+import com.example.protabler.R;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class facultyActivity extends AppCompatActivity {
     private ListView listView;
+    API api;
+    String url;
+    SharedPreferences sharedPreference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_faculty);
+        setContentView(R.layout.activity_faculty);;
+        API_BASE_URL base_url=new API_BASE_URL();
+        url=base_url.getURL();
+        Retrofit retrofit=new Retrofit.Builder()
+                .baseUrl(url)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        api=retrofit.create(API.class);
         setupView();
     }
 
 
     public void setupView() {
         listView = (ListView) findViewById(R.id.lv_faculty);
-        FacultyListAdapter adapter = new FacultyListAdapter(this,DBAccess.facultyNames, DBAccess.facultyEmails, DBAccess.facultyPhones);
-        listView.setAdapter(adapter);
+        sharedPreference =getSharedPreferences("session",MODE_PRIVATE);
+        try {
+            Call<FacultyList> call = api.getMyFaculty(sharedPreference.getInt("userId", -1));
+            call.enqueue(new Callback<FacultyList>() {
+                @Override
+                public void onResponse(Call<FacultyList> call, Response<FacultyList> response) {
+                    FacultyList facultyList = response.body();
+                    List<FacultyDTO> facultyLists = facultyList.getList();
+                    FacultyListAdapter adapter=new FacultyListAdapter(facultyActivity.this,R.layout.single_faculty_row, facultyLists);
+                    listView.setAdapter(adapter);
+
+                }
+
+                @Override
+                public void onFailure(Call<FacultyList> call, Throwable t) {
+                    Toast.makeText(facultyActivity.this, "Something went wrong !" + t.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            });
+
+        }catch(Exception e){
+            Toast.makeText(facultyActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+        }
+
     }
 
     public class FacultyListAdapter extends BaseAdapter {
@@ -43,30 +84,27 @@ public class facultyActivity extends AppCompatActivity {
         private int resource;
         private Context context;
         private LayoutInflater layoutInflater;
-        private String[] names;
-        private String[] emails;
-        private String[] phoneNumbers;
+        List<FacultyDTO> facultyList;
         private TextView name;
         private TextView email;
-        private TextView phoneNumber;
+        private TextView phone;
 
 
-        public FacultyListAdapter(Context context,String [] names,String [] emails,String [] phoneNumbers){
+        public FacultyListAdapter(Context context,int resource,List<FacultyDTO> facultyList){
             this.context=context;
-            this.names=names;
-            this.emails=emails;
-            this.phoneNumbers=phoneNumbers;
+            this.resource=resource;
+            this.facultyList=facultyList;
             layoutInflater=LayoutInflater.from(context);
         }
 
         @Override
         public int getCount() {
-            return names.length;
+            return facultyList.size();
         }
 
         @Override
         public Object getItem(int position) {
-            return names[position];
+            return facultyList.get(position);
         }
 
         @Override
@@ -83,11 +121,11 @@ public class facultyActivity extends AppCompatActivity {
             }
             name = convertView.findViewById(R.id.tv_name_faculty);
             email = convertView.findViewById(R.id.et_email_faculty);
-            phoneNumber = convertView.findViewById(R.id.et_phone_faculty);
-            name.setText(names[position]);
-            email.setText(emails[position]);
-            phoneNumber.setAutoLinkMask(Linkify.PHONE_NUMBERS);
-            phoneNumber.setText(phoneNumbers[position]);
+            phone = convertView.findViewById(R.id.et_phone_faculty);
+            name.setText(facultyList.get(position).getName());
+            email.setText(facultyList.get(position).getEmail());
+            phone.setAutoLinkMask(Linkify.PHONE_NUMBERS);
+            phone.setText(facultyList.get(position).getContactNumber());
 
             return convertView;
         }

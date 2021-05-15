@@ -1,6 +1,5 @@
 package com.example.protabler.Fragment;
 
-import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -14,14 +13,13 @@ import android.widget.ArrayAdapter;
 
 import com.example.protabler.Adapter.moduleListAdapter;
 import com.example.protabler.R;
-import com.example.protabler.Utils.DBAccess;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link saturdayFragment.OnFragmentInteractionListener} interface
+ * {@link thursdayFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link saturdayFragment#newInstance} factory method to
+ * Use the {@link thursdayFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
 public class saturdayFragment extends ListFragment {
@@ -46,7 +44,7 @@ public class saturdayFragment extends ListFragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment saturdayFragment.
+     * @return A new instance of fragment thursdayFragment.
      */
     // TODO: Rename and change types and number of parameters
     public static saturdayFragment newInstance(String param1, String param2) {
@@ -71,8 +69,8 @@ public class saturdayFragment extends ListFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        ArrayAdapter adapter=new moduleListAdapter(getActivity(),R.layout.day_info_single_item, DBAccess.modules);
-        setListAdapter(adapter);
+        //ArrayAdapter adapter=new moduleListAdapter(getActivity(),R.layout.day_info_single_item, DBAccess.modules);
+        //setListAdapter(adapter);
         return inflater.inflate(R.layout.fragment_saturday, container, false);
     }
 

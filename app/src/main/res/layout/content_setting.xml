@@ -48,27 +48,6 @@
         android:background="@drawable/rounded_border_edittext"
         android:textAlignment="center"/>
 
-    <EditText
-        android:id="@+id/user_email_setting"
-        android:layout_width="match_parent"
-        android:layout_marginHorizontal="15dp"
-        android:layout_height="50dp"
-        android:text="Email"
-        android:inputType="textEmailAddress"
-        android:layout_marginTop="5dp"
-        android:background="@drawable/rounded_border_edittext"
-        android:textAlignment="center"/>
-
-    <EditText
-        android:id="@+id/user_curriculum_setting"
-        android:layout_width="match_parent"
-        android:layout_marginHorizontal="15dp"
-        android:layout_height="50dp"
-        android:text="Curriculum"
-        android:inputType="text"
-        android:layout_marginTop="5dp"
-        android:background="@drawable/rounded_border_edittext"
-        android:textAlignment="center"/>
 
     <EditText
         android:id="@+id/user_phone_setting"

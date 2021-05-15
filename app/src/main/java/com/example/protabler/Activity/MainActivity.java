@@ -1,9 +1,8 @@
 package com.example.protabler.Activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.content.Context;
 import android.content.Intent;
-
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
@@ -11,29 +10,50 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.protabler.Model.UserRole;
-import com.example.protabler.Utils.DBAccess;
-import com.example.protabler.Model.User;
-import com.example.protabler.R;
-import com.example.protabler.Utils.SessionManagement;
 
-import java.util.ArrayList;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.protabler.API.API;
+import com.example.protabler.API.API_BASE_URL;
+import com.example.protabler.Entities.Login;
+import com.example.protabler.R;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private TextView registerLink;
     private EditText u_email,u_password;
+    private String url;
+    API api;
+    public SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        DBAccess.main();
+
 
         u_email=findViewById(R.id.email);
         u_password=findViewById(R.id.password);
         registerLink=(TextView)findViewById(R.id.registerLink);
         registerLink.setOnClickListener(this);
+
+        sharedPreferences=getSharedPreferences("session", Context.MODE_PRIVATE);
+
+        API_BASE_URL base_url=new API_BASE_URL();
+        url=base_url.getURL();
+        Retrofit retrofit=new Retrofit.Builder()
+                .baseUrl(url)
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        api=retrofit.create(API.class);
 
 
 
@@ -42,22 +62,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onStart() {
         super.onStart();
-        SessionManagement sessionManagement=new SessionManagement(MainActivity.this);
-        int user_id=sessionManagement.getSession();
-        if(user_id != -1){
-            for(int i=0;i< DBAccess.userRoles.size();i++){
-                if(user_id==DBAccess.userRoles.get(i).getUserId()){
-                    UserRole userRole=DBAccess.userRoles.get(i);
-                    if(userRole.getRoleId()== 1){
-                        goToAdminPanelActivity();
-                    }
-                    else if(userRole.getRoleId()== 2){
-                        goToHomeActivity();
-                    }
-                }
+        if(sharedPreferences.getInt("userId",-1) != -1){
+            if(sharedPreferences.getString("role","none").equalsIgnoreCase("Admin")){
+                Intent intent=new Intent(MainActivity.this,adminPanelActivity.class);
+                startActivity(intent);
             }
-
+            else if(sharedPreferences.getString("role","none").equalsIgnoreCase("Student")){
+                Intent intent=new Intent(MainActivity.this,homeActivity.class);
+                startActivity(intent);
+            }
+            else{
+                Intent intent=new Intent(MainActivity.this,LecturerHomeActivity.class);
+                startActivity(intent);
+            }
         }
+
     }
 
     @Override
@@ -81,53 +100,74 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 u_password.setError("Password field cannot be empty!");
                 u_password.requestFocus();
             }
-        ArrayList<User> users=DBAccess.users;
-        Boolean found=false;
-        for(int i=0;i<users.size();i++)
-        {
 
-            if(users.get(i).getEmail().equalsIgnoreCase(email) && users.get(i).getPassword().equals(password))
-            {
-                User user=users.get(i);
-                found=true;
-                Toast.makeText(MainActivity.this,"Login Success!",Toast.LENGTH_LONG).show();
-                SessionManagement sessionManagement=new SessionManagement(MainActivity.this);
-                sessionManagement.saveSession(users.get(i));
-                for(int j=0;j < DBAccess.userRoles.size();j++){
-                    if(user.getUserId()== DBAccess.userRoles.get(j).getUserId()){
-                        UserRole userRole=DBAccess.userRoles.get(j);
-                        if(userRole.getRoleId()== 1)
-                        {
-                            goToAdminPanelActivity();
+            try {
+                Login login=new Login(email,password);
+                Call<String> call=api.login(login);
+
+                call.enqueue(new Callback<String>() {
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
+                        String check=response.body();
+
+                        String[] data=check.split(" ");
+
+                        SharedPreferences.Editor editor=sharedPreferences.edit();
+
+                        if(data[0].equals("Invalid")){
+                            Toast.makeText(MainActivity.this,"Email and password doesnt match !",Toast.LENGTH_LONG).show();
                         }
-                        else if(userRole.getRoleId() == 2){
-                            goToHomeActivity();
+                        else if(data[0].equals("Admin"))
+                        {
+
+                            editor.putString("role",data[0]);
+                            editor.putInt("userId",Integer.parseInt(data[1]));
+                            editor.putString("name",data[2]);
+                            editor.putString("email",data[3]);
+                            editor.commit();
+                            Intent intent=new Intent(MainActivity.this,adminPanelActivity.class);
+                            startActivity(intent);
+                        }
+                        else if(data[0].equals("Student"))
+                        {
+
+                            editor.putString("role",data[0]);
+                            editor.putInt("userId",Integer.parseInt(data[1]));
+                            editor.putString("name",data[2]);
+                            editor.putString("email",data[3]);
+                            editor.commit();
+                            Intent intent=new Intent(MainActivity.this,homeActivity.class);
+                            startActivity(intent);
+                        }
+                        else if(data[0].equals("Lecturer"))
+                        {
+
+                            editor.putString("role",data[0]);
+                            editor.putInt("userId",Integer.parseInt(data[1]));
+                            editor.putString("name",data[2]);
+                            editor.putString("email",data[3]);
+                            editor.commit();
+                            Intent intent=new Intent(MainActivity.this,LecturerHomeActivity.class);
+                            startActivity(intent);
+                        }
+                        else
+                        {
+                            Toast.makeText(MainActivity.this,"Something went wrong !",Toast.LENGTH_LONG).show();
                         }
                     }
 
-                }
+                    @Override
+                    public void onFailure(Call<String> call, Throwable t) {
+                        Toast.makeText(MainActivity.this,"Something went wrong !",Toast.LENGTH_LONG).show();
+                        System.out.println(t.getLocalizedMessage());
+                    }
+                });
 
             }
+            catch (Exception e){
+                Toast.makeText(MainActivity.this,"Something went wrong !",Toast.LENGTH_LONG).show();
+            }
 
-        }
-        if(found==false){
-            u_email.setText("");
-            u_password.setText("");
-            Toast.makeText(MainActivity.this,"Sorry your email and password do not match! Try again.",Toast.LENGTH_LONG).show();
-
-
-        }
     }
 
-    private void goToHomeActivity() {
-        Intent intent=new Intent(this, homeActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-    }
-
-    private void goToAdminPanelActivity(){
-        Intent intent=new Intent(this, adminPanelActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-    }
 }

@@ -13,7 +13,6 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -25,15 +24,13 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.example.protabler.R;
 import com.google.android.material.navigation.NavigationView;
 
-import java.util.prefs.PreferenceChangeEvent;
-
 
 public class homeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private ListView listView;
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle mtoggle;
-    SharedPreferences session;
+    SharedPreferences sharedPreference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,10 +54,16 @@ public class homeActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout=(DrawerLayout)findViewById(R.id.drawer_layout);
         NavigationView navigationView=(NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        navigationView.getMenu().findItem(R.id.module_menu_item).setVisible(true);
+        navigationView.getMenu().findItem(R.id.faculty_menu_item).setVisible(true);
+        navigationView.getMenu().findItem(R.id.resource_menu_item).setVisible(true);
+        navigationView.getMenu().findItem(R.id.setting_menu_item).setVisible(true);
+        navigationView.getMenu().findItem(R.id.timetable_menu_item).setVisible(true);
+        navigationView.getMenu().findItem(R.id.profile_menu_item).setVisible(true);
         View headerView=navigationView.getHeaderView(0);
         TextView username=headerView.findViewById(R.id.user_profile_name);
-        session= getSharedPreferences("session",MODE_PRIVATE);
-        username.setText(session.getString("user_name","Username"));
+        sharedPreference = getSharedPreferences("session",MODE_PRIVATE);
+        username.setText(sharedPreference.getString("name","Username"));
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Protabler");
@@ -122,6 +125,11 @@ public class homeActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
+    public void onBackPressed() {
+        finishAffinity();
+    }
+
+    @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch(menuItem.getItemId()){
             case R.id.profile_menu_item:{
@@ -156,7 +164,7 @@ public class homeActivity extends AppCompatActivity implements NavigationView.On
 
             }
             case R.id.logout_menu_item:{
-                SharedPreferences.Editor editor=session.edit();
+                SharedPreferences.Editor editor= sharedPreference.edit();
                 editor.clear();
                 editor.commit();
                 Intent intent=new Intent(homeActivity.this,MainActivity.class);
@@ -223,7 +231,6 @@ public class homeActivity extends AppCompatActivity implements NavigationView.On
             }else{
                 imageView.setImageResource(R.drawable.settings);
             }
-
 
             return convertView;
         }

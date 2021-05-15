@@ -1,6 +1,8 @@
 package com.example.protabler.Fragment;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -11,10 +13,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
+import com.example.protabler.API.API;
+import com.example.protabler.API.API_BASE_URL;
 import com.example.protabler.Adapter.moduleListAdapter;
+import com.example.protabler.Adapter.sessionListAdapter;
+import com.example.protabler.Dto.SessionDTO;
+import com.example.protabler.Entities.Session;
+import com.example.protabler.JsonList.SessionList;
 import com.example.protabler.R;
-import com.example.protabler.Utils.DBAccess;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -34,6 +52,9 @@ public class mondayFragment extends ListFragment {
     private String mParam1;
     private String mParam2;
 
+    API api;
+    public SharedPreferences sharedPreferences;
+    private String url;
     private OnFragmentInteractionListener mListener;
 
     public mondayFragment() {
@@ -70,9 +91,76 @@ public class mondayFragment extends ListFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        ArrayAdapter adapter=new moduleListAdapter(getActivity(),R.layout.day_info_single_item, DBAccess.modules);
-        setListAdapter(adapter);
+        API_BASE_URL base_url=new API_BASE_URL();
+        url=base_url.getURL();
+        Retrofit  retrofit=new Retrofit.Builder()
+                .baseUrl(url)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        api=retrofit.create(API.class);
+        sharedPreferences=getActivity().getSharedPreferences("session", Context.MODE_PRIVATE);
+        if(sharedPreferences.getString("role","none").equalsIgnoreCase("Student")) {
+            try {
+                Call<SessionList> call = api.getTimetable(sharedPreferences.getInt("userId", -1));
+
+                call.enqueue(new Callback<SessionList>() {
+                    @SuppressLint("ResourceAsColor")
+                    @Override
+                    public void onResponse(Call<SessionList> call, Response<SessionList> response) {
+                        SessionList list = response.body();
+                        List<SessionDTO> sessions = list.getSessionList();
+                        List<SessionDTO> mondaySessions = new ArrayList<>();
+                        for (SessionDTO s : sessions) {
+                            if (s.getDay().equalsIgnoreCase("MONDAY")) {
+                                mondaySessions.add(s);
+                            }
+                        }
+                        ArrayAdapter adapter = new sessionListAdapter(getActivity(), R.layout.day_info_single_item, mondaySessions);
+                        setListAdapter(adapter);
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<SessionList> call, Throwable t) {
+                        Toast.makeText(getActivity(), "Something went wrong !" + t.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                });
+            } catch (Exception e) {
+                Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        }
+        else if(sharedPreferences.getString("role","none").equalsIgnoreCase("Lecturer")){
+            try {
+                Call<SessionList> call = api.getTimetableLecturer(sharedPreferences.getInt("userId", -1));
+
+                call.enqueue(new Callback<SessionList>() {
+                    @SuppressLint("ResourceAsColor")
+                    @Override
+                    public void onResponse(Call<SessionList> call, Response<SessionList> response) {
+                        SessionList list = response.body();
+                        List<SessionDTO> sessions = list.getSessionList();
+                        List<SessionDTO> mondaySessions = new ArrayList<>();
+                        for (SessionDTO s : sessions) {
+                            if (s.getDay().equalsIgnoreCase("MONDAY")) {
+                                mondaySessions.add(s);
+                            }
+                        }
+                        ArrayAdapter adapter = new sessionListAdapter(getActivity(), R.layout.day_info_single_item, mondaySessions);
+                        setListAdapter(adapter);
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<SessionList> call, Throwable t) {
+                        Toast.makeText(getActivity(), "Something went wrong !" + t.getCause(), Toast.LENGTH_LONG).show();
+                    }
+                });
+            } catch (Exception e) {
+                Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        }
+
+
         return inflater.inflate(R.layout.fragment_monday, container, false);
     }
 

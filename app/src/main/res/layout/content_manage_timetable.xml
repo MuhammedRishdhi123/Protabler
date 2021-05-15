@@ -4,6 +4,7 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize">
@@ -16,12 +17,15 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:titleTextColor="@color/textColor1"></androidx.appcompat.widget.Toolbar>
+            app:titleTextColor="@color/textColor1">
+        </androidx.appcompat.widget.Toolbar>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
     <ListView
         android:id="@+id/lv_timetables"
         android:layout_width="match_parent"
@@ -33,15 +37,6 @@
         android:dividerHeight="10dp"
         android:divider="@null"></ListView>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_timetable"
-        android:layout_width="wrap_content"
-        android:backgroundTint="@color/colorPrimary"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_marginRight="25dp"
-        android:layout_marginBottom="25dp"
-        android:src="@drawable/ic_add_white_12dp"
-        />
+
     </FrameLayout>
 </LinearLayout>

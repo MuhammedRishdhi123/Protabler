@@ -30,7 +30,7 @@ public class timetableActivity extends AppCompatActivity implements NavigationVi
     private ListView listView;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle mtoggle;
-    SharedPreferences session;
+    SharedPreferences sharedPreferences;
     TabLayout tabLayout;
     ViewPager viewPager;
 
@@ -40,6 +40,7 @@ public class timetableActivity extends AppCompatActivity implements NavigationVi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timetable);
+        sharedPreferences=getSharedPreferences("session",MODE_PRIVATE);
         setupView();
 
 
@@ -56,10 +57,26 @@ public class timetableActivity extends AppCompatActivity implements NavigationVi
 
         NavigationView navigationView=(NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        if(sharedPreferences.getString("role","none").equalsIgnoreCase("Student")) {
+            navigationView.getMenu().findItem(R.id.module_menu_item).setVisible(true);
+            navigationView.getMenu().findItem(R.id.faculty_menu_item).setVisible(true);
+            navigationView.getMenu().findItem(R.id.resource_menu_item).setVisible(true);
+            navigationView.getMenu().findItem(R.id.setting_menu_item).setVisible(true);
+            navigationView.getMenu().findItem(R.id.timetable_menu_item).setVisible(true);
+            navigationView.getMenu().findItem(R.id.profile_menu_item).setVisible(true);
+        }
+        else{
+            navigationView.getMenu().findItem(R.id.module_menu_item).setVisible(true);
+            navigationView.getMenu().findItem(R.id.resource_menu_item).setVisible(true);
+            navigationView.getMenu().findItem(R.id.setting_menu_item).setVisible(true);
+            navigationView.getMenu().findItem(R.id.timetable_menu_item).setVisible(true);
+            navigationView.getMenu().findItem(R.id.profile_menu_item).setVisible(true);
+        }
         View headerView=navigationView.getHeaderView(0);
         TextView username=headerView.findViewById(R.id.user_profile_name);
-        session= getSharedPreferences("session",MODE_PRIVATE);
-        username.setText(session.getString("user_name","Username"));
+
+        username.setText(sharedPreferences.getString("name","Username"));
 
         tabLayout=findViewById(R.id.tablayout);
         viewPager=findViewById(R.id.viewpager);
@@ -140,7 +157,7 @@ public class timetableActivity extends AppCompatActivity implements NavigationVi
                 break;
             }
             case R.id.logout_menu_item:{
-                SharedPreferences.Editor editor=session.edit();
+                SharedPreferences.Editor editor=sharedPreferences.edit();
                 editor.clear();
                 editor.commit();
                 Intent intent=new Intent(timetableActivity.this,MainActivity.class);

@@ -20,6 +20,7 @@
         android:background="@color/grey"
         app:itemIconTint="@color/darkgrey"
         app:itemTextColor="@color/black"
+        app:menu="@menu/drawermenu"
         app:headerLayout="@layout/nav_header_home"
         android:layout_gravity="start"></com.google.android.material.navigation.NavigationView>
 

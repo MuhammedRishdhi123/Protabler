@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.protabler">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -12,32 +13,40 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activity.editStudentActivity"
-            android:launchMode="singleTop"></activity>
-        <activity android:name=".Activity.editFacultyActivity"
-            android:launchMode="singleTop"/>
-        <activity android:name=".Activity.editModuleActivity"
-            android:launchMode="singleTop"/>
-        <activity android:name=".Activity.editDayScheduleActivity"
-            android:launchMode="singleTop"/>
-        <activity android:name=".Activity.editTimetableActivity"
-            android:launchMode="singleTop"/>
-        <activity android:name=".Activity.manageStudentActivity"
-            android:launchMode="singleTop"/>
-        <activity android:name=".Activity.manageFacultyActivity"
-            android:launchMode="singleTop"/>
-        <activity android:name=".Activity.manageModuleActivity"
-            android:launchMode="singleTop"/>
-        <activity android:name=".Activity.manageTimetableActivity"
-            android:launchMode="singleTop"/>
-        <activity android:name=".Activity.adminPanelActivity"
-            android:launchMode="singleTop"/>
-        <activity android:name=".Activity.myCalendarActivity"
-            android:launchMode="singleTop"/>
-        <activity android:name=".Activity.resourcesActivity"
-            android:launchMode="singleTop"/>
-        <activity android:name=".Activity.facultyActivity"
-            android:launchMode="singleTop"/>
+        <activity android:name=".Activity.editLecturerActivity"></activity>
+        <activity android:name=".Activity.addNewSessionActivity" />
+        <activity android:name=".Activity.manageBatchTimetableActivity" />
+        <activity android:name=".Activity.manageLecturerActivity" />
+        <activity
+            android:name=".Activity.editStudentActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".Activity.editModuleActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".Activity.manageStudentActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".Activity.manageModuleActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".Activity.manageTimetableActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".Activity.adminPanelActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".Activity.myCalendarActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".Activity.resourcesActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".Activity.facultyActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".Activity.LecturerHomeActivity"
+            android:launchMode="singleTop" />
         <activity
             android:name=".Activity.settingActivity"
             android:launchMode="singleTop" />

@@ -15,11 +15,25 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.protabler.API.API;
+import com.example.protabler.API.API_BASE_URL;
 import com.example.protabler.Adapter.moduleListAdapter;
+import com.example.protabler.Dto.ModuleDTO;
+import com.example.protabler.Entities.Module;
+import com.example.protabler.JsonList.ModuleList;
 import com.example.protabler.R;
-import com.example.protabler.Utils.DBAccess;
 import com.google.android.material.navigation.NavigationView;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class moduleActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
@@ -27,12 +41,22 @@ public class moduleActivity extends AppCompatActivity implements NavigationView.
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle mtoggle;
-    SharedPreferences session;
-
+    SharedPreferences sharedPreference;
+    API api;
+    String url;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_module);
+        sharedPreference = getSharedPreferences("session",MODE_PRIVATE);
+        API_BASE_URL base_url=new API_BASE_URL();
+        url=base_url.getURL();
+        Retrofit retrofit=new Retrofit.Builder()
+                .baseUrl(url)
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        api=retrofit.create(API.class);
         setupView();
 
 
@@ -55,13 +79,72 @@ public class moduleActivity extends AppCompatActivity implements NavigationView.
 
         NavigationView navigationView=(NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        if(sharedPreference.getString("role","none").equalsIgnoreCase("Student")) {
+            navigationView.getMenu().findItem(R.id.module_menu_item).setVisible(true);
+            navigationView.getMenu().findItem(R.id.faculty_menu_item).setVisible(true);
+            navigationView.getMenu().findItem(R.id.resource_menu_item).setVisible(true);
+            navigationView.getMenu().findItem(R.id.setting_menu_item).setVisible(true);
+            navigationView.getMenu().findItem(R.id.timetable_menu_item).setVisible(true);
+            navigationView.getMenu().findItem(R.id.profile_menu_item).setVisible(true);
+        }
+        else{
+            navigationView.getMenu().findItem(R.id.module_menu_item).setVisible(true);
+            navigationView.getMenu().findItem(R.id.resource_menu_item).setVisible(true);
+            navigationView.getMenu().findItem(R.id.setting_menu_item).setVisible(true);
+            navigationView.getMenu().findItem(R.id.timetable_menu_item).setVisible(true);
+            navigationView.getMenu().findItem(R.id.profile_menu_item).setVisible(true);
+        }
         View headerView=navigationView.getHeaderView(0);
         TextView username=headerView.findViewById(R.id.user_profile_name);
-        session= getSharedPreferences("session",MODE_PRIVATE);
-        username.setText(session.getString("user_name","Username"));
 
-        ArrayAdapter adapter=new moduleListAdapter(this,R.layout.day_info_single_item, DBAccess.modules);
-        listView.setAdapter(adapter);
+        username.setText(sharedPreference.getString("name","Username"));
+
+        if(sharedPreference.getString("role","none").equalsIgnoreCase("Student")) {
+            try {
+                Call<ModuleList> call = api.getMyModules(sharedPreference.getInt("userId", -1));
+                call.enqueue(new Callback<ModuleList>() {
+                    @Override
+                    public void onResponse(Call<ModuleList> call, Response<ModuleList> response) {
+                        ModuleList moduleList = response.body();
+                        List<ModuleDTO> moduleLists = moduleList.getModuleList();
+                        ArrayAdapter adapter = new moduleListAdapter(moduleActivity.this, R.layout.single_module, moduleLists);
+                        listView.setAdapter(adapter);
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<ModuleList> call, Throwable t) {
+                        Toast.makeText(moduleActivity.this, "Something went wrong !" + t.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                });
+
+            } catch (Exception e) {
+                Toast.makeText(moduleActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        }
+        else{
+            try {
+                Call<ModuleList> call = api.getLecturerModules(sharedPreference.getInt("userId", -1));
+                call.enqueue(new Callback<ModuleList>() {
+                    @Override
+                    public void onResponse(Call<ModuleList> call, Response<ModuleList> response) {
+                        ModuleList moduleList = response.body();
+                        List<ModuleDTO> moduleLists = moduleList.getModuleList();
+                        ArrayAdapter adapter = new moduleListAdapter(moduleActivity.this, R.layout.single_module, moduleLists);
+                        listView.setAdapter(adapter);
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<ModuleList> call, Throwable t) {
+                        Toast.makeText(moduleActivity.this, "Something went wrong !" + t.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                });
+
+            } catch (Exception e) {
+                Toast.makeText(moduleActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        }
 
     }
 
@@ -111,7 +194,7 @@ public class moduleActivity extends AppCompatActivity implements NavigationView.
                 break;
             }
             case R.id.logout_menu_item:{
-                SharedPreferences.Editor editor=session.edit();
+                SharedPreferences.Editor editor= sharedPreference.edit();
                 editor.clear();
                 editor.commit();
                 Intent intent=new Intent(moduleActivity.this,MainActivity.class);

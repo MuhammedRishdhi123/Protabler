@@ -4,18 +4,15 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.os.IBinder;
 import android.view.View;
 import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.protabler.Model.Reminder;
+import com.example.protabler.Entities.Reminder;
 import com.example.protabler.R;
-import com.example.protabler.Utils.DBAccess;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
@@ -53,19 +50,6 @@ public class myCalendarActivity extends AppCompatActivity {
         }catch (Exception e){
             e.printStackTrace();
         }
-        for(Reminder r: DBAccess.reminders){
-            if (selectedDate1.compareTo(r.getDate()) == 0){
-                r.setName(reminderText.getText().toString());
-                reminderText.setText(r.getName());
-                Toast.makeText(myCalendarActivity.this,"Calendar updated successfully !",Toast.LENGTH_LONG).show();
-            }
-            else{
-                Reminder reminder=new Reminder(DBAccess.reminders.size()+1,reminderText.getText().toString(),selectedDate1);
-                DBAccess.reminders.add(reminder);
-                reminderText.setText(reminderText.getText());
-                Toast.makeText(myCalendarActivity.this,"Calendar updated successfully !",Toast.LENGTH_LONG).show();
-            }
-        }
     }
 
 
@@ -78,12 +62,12 @@ public class myCalendarActivity extends AppCompatActivity {
         }catch (Exception e){
             e.printStackTrace();
         }
-        for(Reminder r: DBAccess.reminders){
-            if (selectedDate1.compareTo(r.getDate()) == 0){
-                reminderText.setText(r.getName());
-                found=true;
-            }
-        }
+//        for(Reminder r: DBAccess.reminders){
+//            if (selectedDate1.compareTo(r.getDate()) == 0){
+//                reminderText.setText(r.getName());
+//                found=true;
+//            }
+//        }
         if(!found){
             reminderText.setText("");
         }

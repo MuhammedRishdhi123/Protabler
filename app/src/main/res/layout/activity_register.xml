@@ -7,7 +7,7 @@
     tools:context=".Activity.registerActivity">
 
     <EditText
-        android:id="@+id/first_name"
+        android:id="@+id/name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -26,25 +26,7 @@
         app:layout_constraintTop_toBottomOf="@id/imageView2"
         tools:layout_editor_absoluteY="148dp" />
 
-    <EditText
-        android:id="@+id/last_name"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
-        android:layout_marginTop="10dp"
-        android:drawableStart="@drawable/ic_person_outline_black_24dp"
-        android:drawableLeft="@drawable/ic_person_outline_black_24dp"
-        android:ems="10"
-        android:hint="@string/last_name"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/first_name"
-        tools:layout_editor_absoluteY="208dp" />
+
 
     <View
         android:id="@+id/topView"
@@ -81,7 +63,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/last_name"
+        app:layout_constraintTop_toBottomOf="@id/name"
         tools:layout_editor_absoluteY="264dp" />
 
     <TextView
@@ -96,26 +78,55 @@
         app:layout_constraintTop_toBottomOf="@+id/register_btn"
         app:layout_constraintVertical_bias="0.239" />
 
+    <Spinner
+        android:id="@+id/batchCode"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/email" />
+
+
+    <Spinner
+        android:id="@+id/course"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/batchCode" />
+
     <EditText
-        android:id="@+id/curriculum"
+        android:id="@+id/phone"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginLeft="32dp"
         android:layout_marginEnd="32dp"
         android:layout_marginRight="32dp"
-        android:layout_marginTop="10dp"
-        android:drawableStart="@drawable/ic_library_books_black_24dp"
-        android:drawableLeft="@drawable/ic_library_books_black_24dp"
+        android:drawableStart="@drawable/ic_local_phone_black_24dp"
+        android:drawableLeft="@drawable/ic_local_phone_black_24dp"
         android:ems="10"
-        android:hint="@string/curriculum"
-        android:inputType="text"
+        android:hint="@string/phone"
+        android:inputType="text|phone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/email"
-        tools:layout_editor_absoluteY="322dp"
-        android:autofillHints="" />
+        app:layout_constraintTop_toBottomOf="@id/course"
+        android:layout_marginTop="10dp"
+        tools:layout_editor_absoluteY="431dp"
+        />
 
 
     <EditText
@@ -156,45 +167,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/password" />
 
-    <EditText
-        android:id="@+id/phone"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
-        android:drawableStart="@drawable/ic_local_phone_black_24dp"
-        android:drawableLeft="@drawable/ic_local_phone_black_24dp"
-        android:ems="10"
-        android:hint="@string/phone"
-        android:inputType="text|phone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/batchCode"
-        android:layout_marginTop="10dp"
-        tools:layout_editor_absoluteY="431dp"
-        />
 
-    <EditText
-        android:id="@+id/batchCode"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
-        android:drawableStart="@drawable/ic_people_black_24dp"
-        android:drawableLeft="@drawable/ic_people_black_24dp"
-        android:ems="10"
-        android:hint="@string/batch_code"
-        android:inputType="text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/curriculum" />
+
+
 
     <ImageView
         android:id="@+id/imageView2"
