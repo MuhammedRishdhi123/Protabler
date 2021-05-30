@@ -3,12 +3,14 @@ package com.example.protabler.Activity;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.util.Linkify;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -35,6 +37,7 @@ public class facultyActivity extends AppCompatActivity {
     API api;
     String url;
     SharedPreferences sharedPreference;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +57,11 @@ public class facultyActivity extends AppCompatActivity {
     public void setupView() {
         listView = (ListView) findViewById(R.id.lv_faculty);
         sharedPreference =getSharedPreferences("session",MODE_PRIVATE);
+        toolbar=findViewById(R.id.ToolBarMain);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle(getResources().getString(R.string.my_faculty));
+
         try {
             Call<FacultyList> call = api.getMyFaculty(sharedPreference.getInt("userId", -1));
             call.enqueue(new Callback<FacultyList>() {
@@ -130,5 +138,16 @@ public class facultyActivity extends AppCompatActivity {
             return convertView;
         }
 
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

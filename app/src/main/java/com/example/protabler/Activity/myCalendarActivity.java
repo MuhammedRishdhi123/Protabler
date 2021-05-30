@@ -2,8 +2,10 @@ package com.example.protabler.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.CalendarView;
 import android.widget.EditText;
@@ -21,6 +23,7 @@ public class myCalendarActivity extends AppCompatActivity {
     private EditText reminderText;
     private CalendarView calendarView;
     private String selectedDate;
+    private Toolbar toolbar;
 
 
     @Override
@@ -29,6 +32,12 @@ public class myCalendarActivity extends AppCompatActivity {
         setContentView(R.layout.activity_my_calendar);
         reminderText=findViewById(R.id.et_reminder);
         calendarView=findViewById(R.id.myCalendar);
+        toolbar=findViewById(R.id.ToolBarMain);
+
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle(getResources().getString(R.string.my_calendar));
+
 
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
@@ -71,5 +80,15 @@ public class myCalendarActivity extends AppCompatActivity {
         if(!found){
             reminderText.setText("");
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

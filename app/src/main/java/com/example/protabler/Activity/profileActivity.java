@@ -135,7 +135,7 @@ public class profileActivity extends AppCompatActivity implements NavigationView
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Profile");
+        getSupportActionBar().setTitle(getResources().getString(R.string.profile));
 
         mtoggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
         drawerLayout.addDrawerListener(mtoggle);

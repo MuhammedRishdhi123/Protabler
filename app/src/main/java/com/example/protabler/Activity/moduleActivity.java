@@ -69,7 +69,7 @@ public class moduleActivity extends AppCompatActivity implements NavigationView.
         drawerLayout=(DrawerLayout)findViewById(R.id.drawer_layout);
 
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("My modules");
+        getSupportActionBar().setTitle(getResources().getString(R.string.my_modules));
 
         mtoggle=new ActionBarDrawerToggle(this,drawerLayout,R.string.open,R.string.close);
         drawerLayout.addDrawerListener(mtoggle);
@@ -77,9 +77,18 @@ public class moduleActivity extends AppCompatActivity implements NavigationView.
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        NavigationView navigationView=(NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        if(sharedPreference.getString("role","none").equalsIgnoreCase("Student")) {
+
+        if(sharedPreference.getString("role","none").equalsIgnoreCase("Admin")){
+            navigationView.getMenu().findItem(R.id.manage_course_menu_item).setVisible(true);
+            navigationView.getMenu().findItem(R.id.manage_lecturer_menu_item).setVisible(true);
+            navigationView.getMenu().findItem(R.id.manage_module_menu_item).setVisible(true);
+            navigationView.getMenu().findItem(R.id.manage_student_menu_item).setVisible(true);
+            navigationView.getMenu().findItem(R.id.manage_timetable_menu_item).setVisible(true);
+            navigationView.getMenu().findItem(R.id.profile_menu_item).setVisible(true);
+        }
+        else if(sharedPreference.getString("role","none").equalsIgnoreCase("Student")){
             navigationView.getMenu().findItem(R.id.module_menu_item).setVisible(true);
             navigationView.getMenu().findItem(R.id.faculty_menu_item).setVisible(true);
             navigationView.getMenu().findItem(R.id.resource_menu_item).setVisible(true);

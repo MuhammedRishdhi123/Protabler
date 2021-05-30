@@ -11,6 +11,7 @@
     <string name="batch_code">Batch code</string>
     <string name="close">Close</string>
     <string name="open">Open</string>
+    <string name="my_calendar">My Calendar</string>
 
     <string name="dont_have_an_account">Dont have an account ?</string>
 
@@ -77,6 +78,11 @@
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
     <string name="addnewsession">Add New Session</string>
+    <string name="resources">Resources</string>
+    <string name="profile">Profile</string>
+    <string name="my_modules">My modules</string>
+    <string name="home">Home</string>
+    <string name="my_faculty">My faculty</string>
 
     <string-array name="resources">
         <item>My Calender</item>

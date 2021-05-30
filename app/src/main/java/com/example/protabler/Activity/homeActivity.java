@@ -66,7 +66,7 @@ public class homeActivity extends AppCompatActivity implements NavigationView.On
         username.setText(sharedPreference.getString("name","Username"));
 
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Protabler");
+        getSupportActionBar().setTitle(getResources().getString(R.string.home));
 
         String [] titles=getResources().getStringArray(R.array.Main);
         String [] descriptions=getResources().getStringArray(R.array.Description);

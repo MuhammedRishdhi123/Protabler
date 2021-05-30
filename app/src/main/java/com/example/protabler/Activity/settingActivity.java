@@ -132,18 +132,32 @@ public class settingActivity extends AppCompatActivity implements NavigationView
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        if (sharedPreferences.getString("role", "none").equalsIgnoreCase("Admin")) {
-            navigationView.getMenu().clear();
-            navigationView.inflateMenu(R.menu.drawermenu);
-        } else if (sharedPreferences.getString("role","none").equalsIgnoreCase("Student")) {
-            navigationView.getMenu().clear();
-            navigationView.inflateMenu(R.menu.drawermenu);
-        }
-        else if (sharedPreferences.getString("role","none").equalsIgnoreCase("Lecturer")) {
-            navigationView.getMenu().clear();
-            navigationView.inflateMenu(R.menu.drawermenu);
-        }
+        navigationView.setNavigationItemSelectedListener(this);
 
+        if(sharedPreferences.getString("role","none").equalsIgnoreCase("Admin")){
+            navigationView.getMenu().findItem(R.id.manage_course_menu_item).setVisible(true);
+            navigationView.getMenu().findItem(R.id.manage_lecturer_menu_item).setVisible(true);
+            navigationView.getMenu().findItem(R.id.manage_module_menu_item).setVisible(true);
+            navigationView.getMenu().findItem(R.id.manage_student_menu_item).setVisible(true);
+            navigationView.getMenu().findItem(R.id.manage_timetable_menu_item).setVisible(true);
+            navigationView.getMenu().findItem(R.id.profile_menu_item).setVisible(true);
+        }
+        else if(sharedPreferences.getString("role","none").equalsIgnoreCase("Student")){
+            navigationView.getMenu().findItem(R.id.module_menu_item).setVisible(true);
+            navigationView.getMenu().findItem(R.id.faculty_menu_item).setVisible(true);
+            navigationView.getMenu().findItem(R.id.resource_menu_item).setVisible(true);
+            navigationView.getMenu().findItem(R.id.setting_menu_item).setVisible(true);
+            navigationView.getMenu().findItem(R.id.timetable_menu_item).setVisible(true);
+            navigationView.getMenu().findItem(R.id.profile_menu_item).setVisible(true);
+        }
+        else{
+            navigationView.getMenu().findItem(R.id.module_menu_item).setVisible(true);
+            navigationView.getMenu().findItem(R.id.resource_menu_item).setVisible(true);
+            navigationView.getMenu().findItem(R.id.setting_menu_item).setVisible(true);
+            navigationView.getMenu().findItem(R.id.timetable_menu_item).setVisible(true);
+            navigationView.getMenu().findItem(R.id.profile_menu_item).setVisible(true);
+        }
+        
         navigationView.setNavigationItemSelectedListener(this);
         View headerView = navigationView.getHeaderView(0);
         TextView username = headerView.findViewById(R.id.user_profile_name);

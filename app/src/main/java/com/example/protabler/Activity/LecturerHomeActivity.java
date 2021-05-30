@@ -66,7 +66,7 @@ public class LecturerHomeActivity extends AppCompatActivity implements Navigatio
         username.setText(sharedPreference.getString("name","Username"));
 
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Protabler");
+        getSupportActionBar().setTitle(getResources().getString(R.string.home));
 
         String [] titles=getResources().getStringArray(R.array.LecturerHomeItems);
         String [] descriptions=getResources().getStringArray(R.array.Description_lecturerHomeItems);

@@ -1,11 +1,14 @@
 package com.example.protabler.Activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -19,6 +22,7 @@ import com.example.protabler.R;
 public class resourcesActivity extends AppCompatActivity {
 
     private GridView gridView;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +34,12 @@ public class resourcesActivity extends AppCompatActivity {
 
     public void setupView(){
         gridView=findViewById(R.id.gv_resources);
+        toolbar=findViewById(R.id.ToolBarMain);
+
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        getSupportActionBar().setTitle(getResources().getString(R.string.resources));
 
         String [] resources=getResources().getStringArray(R.array.resources);
         ListAdapter adapter =new ListAdapter(resourcesActivity.this,resources);
@@ -100,4 +110,13 @@ public class resourcesActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }
