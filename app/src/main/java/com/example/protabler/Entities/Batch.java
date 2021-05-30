@@ -6,13 +6,13 @@ public class Batch {
     private int batchId;
     private String batchTitle;
     private List<Student> students;
-    private List<Batch> batches;
+    private List<Session> sessions;
 
-    public Batch(int batchId, String batchTitle, List<Student> students, List<Batch> batches) {
+    public Batch(int batchId, String batchTitle, List<Student> students, List<Session> sessions) {
         this.batchId = batchId;
         this.batchTitle = batchTitle;
         this.students = students;
-        this.batches = batches;
+        this.sessions = sessions;
     }
 
     public Batch() {
@@ -42,11 +42,11 @@ public class Batch {
         this.students = students;
     }
 
-    public List<Batch> getBatches() {
-        return batches;
+    public List<Session> getSessions() {
+        return sessions;
     }
 
-    public void setBatches(List<Batch> batches) {
-        this.batches = batches;
+    public void setSessions(List<Session> sessions) {
+        this.sessions = sessions;
     }
 }
